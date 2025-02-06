@@ -13,7 +13,8 @@ public class Program {
 		
 		VendedorDao vendedorDao = DaoFactory.createVendedorDao();
 		
-		Vendedor vendedor = vendedorDao.Read(3);
+		System.out.println("=== teste: procurar vendedor ====");
+		Vendedor vendedor = vendedorDao.Read(1);
 		
 		System.out.println(vendedor);
 
