@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 
+import model.entities.Departamento;
 import model.entities.Vendedor;
 
 public interface VendedorDao {
@@ -11,4 +12,5 @@ public interface VendedorDao {
 	void Update(Vendedor obj);
 	void Delete(int id);
 	List<Vendedor> readAll();
+	List<Vendedor> findByDepartment(Departamento departamento);
 }

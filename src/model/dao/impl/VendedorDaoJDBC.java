@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -71,6 +74,45 @@ public class VendedorDaoJDBC implements VendedorDao{
 		return null;
 	}
 	
+	@Override
+	public List<Vendedor> findByDepartment(Departamento departamento) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT vendedor.*,departamento.Nome as DepNome "
+					+ "FROM vendedor INNER JOIN departamento "
+					+ "ON vendedor.DepartamentoId = departamento.Id "
+					+ "WHERE DepartamentoId = ? "
+					+ "ORDER BY Nome");
+			
+			st.setInt(1, departamento.getId());
+			rs = st.executeQuery();
+			
+			List<Vendedor> list = new ArrayList<>();
+			Map<Integer, Departamento> map = new HashMap<>();
+			
+			while(rs.next()) {
+				
+				Departamento dep = map.get(rs.getInt("DepartamentoId"));
+				
+				if(dep == null) {
+					dep = instanciarDepartamento(rs);
+					map.put(rs.getInt("DepartamentoId"), dep);
+				}
+				
+				Vendedor obj = instanciarVendedor(rs, dep);
+				list.add(obj);
+			}
+			return list;
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
+	
 	private Departamento instanciarDepartamento(ResultSet rs) throws SQLException {
 		Departamento dep = new Departamento();
 		dep.setId(rs.getInt("DepartamentoId"));
@@ -88,4 +130,5 @@ public class VendedorDaoJDBC implements VendedorDao{
 		obj.setDepartment(dep);
 		return obj;
 	}
+
 }
