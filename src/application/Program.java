@@ -22,6 +22,12 @@ public class Program {
 		for(Vendedor obj : list) {
 			System.out.println(obj);
 		}
+		
+		System.out.println("=== teste: procurar tudo ====");
+		list = vendedorDao.readAll();
+		for(Vendedor obj : list) {
+			System.out.println(obj);
+		}
 
 	}
 
