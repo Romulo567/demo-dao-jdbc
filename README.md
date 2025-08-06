@@ -1,4 +1,4 @@
-# 🚀 Desenvolvimento de Sistema em Java com JDBC e Padrão DAO 🚀
+# 🚀 Desenvolvimento de Sistema em Java com JDBC e Padrão DAO 
 
   Projeto em Java para gerenciar uma tabela de Vendedores, utilizando JDBC para conectar ao banco de dados MySQL. A aplicação implementa um sistema CRUD completo e foi estruturada com o padrão de projeto DAO (Data Access Object), garantindo uma organização eficiente e modular do código.
 
